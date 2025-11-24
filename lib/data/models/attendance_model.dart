@@ -1,24 +1,28 @@
 class AttendanceModel {
-  final String id;
-  final String userId;
-  final String classroomId;
-  final DateTime timestamp;
+  final String studentName; // สำหรับอาจารย์ดู
+  final String studentId;
+  final String status; // 'present', 'late'
+  final DateTime scanTime;
+  final String subjectName; // สำหรับนิสิตดูประวัติรวม
 
-  AttendanceModel({required this.id, required this.userId, required this.classroomId, required this.timestamp});
+  AttendanceModel({
+    required this.studentName,
+    required this.studentId,
+    required this.status,
+    required this.scanTime,
+    required this.subjectName,
+  });
 
   factory AttendanceModel.fromJson(Map<String, dynamic> json) {
     return AttendanceModel(
-      id: json['id']?.toString() ?? '',
-      userId: json['user_id']?.toString() ?? '',
-      classroomId: json['classroom_id']?.toString() ?? '',
-      timestamp: DateTime.tryParse(json['timestamp'] ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0),
+      studentName: '${json['first_name'] ?? ''} ${json['last_name'] ?? ''}'.trim(),
+      studentId: json['student_id'] ?? '',
+      status: json['status'] ?? 'unknown',
+      // แปลง String จาก SQL (YYYY-MM-DD HH:MM:SS) เป็น DateTime ของ Dart
+      scanTime: json['scan_time'] != null 
+          ? DateTime.parse(json['scan_time']) 
+          : DateTime.now(),
+      subjectName: json['subject_name'] ?? '',
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'user_id': userId,
-        'classroom_id': classroomId,
-        'timestamp': timestamp.toIso8601String(),
-      };
 }
