@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../core/constants/api_constants.dart';
-import '../../core/utils/device_info_tools.dart';
-import '../../core/utils/locations_tools.dart'; // ถ้าจะใช้ GPS
+import '../../core/constants/utils/device_info_tools.dart';
+import '../../core/constants/utils/locations_tools.dart'; // ถ้าจะใช้ GPS
 import '../models/attendance_model.dart';
 
 class StudentService {
