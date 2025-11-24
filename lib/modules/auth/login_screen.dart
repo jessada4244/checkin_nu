@@ -33,13 +33,13 @@ class _LoginScreenState extends State<LoginScreen> {
         if (user != null && mounted) {
           // ถ้า Login ผ่าน ให้เช็ค Role แล้วไปหน้าถัดไป
           if (user.role == 'student') {
-            // Navigator.pushReplacementNamed(context, '/student_dashboard');
+            Navigator.pushReplacementNamed(context, '/student_dashboard');
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ยินดีต้อนรับ นิสิต')));
           } else if (user.role == 'teacher') {
-            // Navigator.pushReplacementNamed(context, '/teacher_dashboard');
+            Navigator.pushReplacementNamed(context, '/teacher_dashboard');
              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ยินดีต้อนรับ อาจารย์')));
           } else if (user.role == 'admin') {
-            // Navigator.pushReplacementNamed(context, '/admin_dashboard');
+            Navigator.pushReplacementNamed(context, '/admin_dashboard');
              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ยินดีต้อนรับ ผู้ดูแลระบบ')));
           }
         }
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // ปุ่มสมัครสมาชิก
                 TextButton(
                   onPressed: () {
-                    // Navigator.pushNamed(context, '/register');
+                    Navigator.pushNamed(context, '/register');
                   },
                   child: const Text('ยังไม่มีบัญชี? สมัครสมาชิก'),
                 ),

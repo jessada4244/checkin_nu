@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../data/services/teacher_service.dart';
 
@@ -12,28 +13,33 @@ class CreateClassScreen extends StatefulWidget {
 
 class _CreateClassScreenState extends State<CreateClassScreen> {
   final _subjectController = TextEditingController();
+  final _capacityController = TextEditingController(); // Controller สำหรับจำนวนคน
   bool _isLoading = false;
 
   void _createClass() async {
-    if (_subjectController.text.isEmpty) return;
+    if (_subjectController.text.isEmpty || _capacityController.text.isEmpty) return;
 
     setState(() => _isLoading = true);
     try {
       final service = TeacherService();
-      String key = await service.createClassroom(widget.teacherId, _subjectController.text);
+      // ส่งค่า capacity ไปด้วย
+      String key = await service.createClassroom(
+        widget.teacherId, 
+        _subjectController.text,
+        int.parse(_capacityController.text)
+      );
       
       if (mounted) {
-        // แสดง Dialog แจ้ง Key
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
             title: const Text('สร้างวิชาสำเร็จ'),
-            content: Text('รหัสสำหรับให้นิสิตเข้าห้องคือ:\n$key', textAlign: TextAlign.center, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            content: Text('รหัสวิชา: ${_subjectController.text}\nKey เข้าห้อง: $key', textAlign: TextAlign.center),
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(ctx); // ปิด Dialog
-                  Navigator.pop(context, true); // กลับไปหน้า Dashboard พร้อมบอกว่าสำเร็จ
+                  Navigator.pop(ctx);
+                  Navigator.pop(context, true);
                 },
                 child: const Text('ตกลง'),
               )
@@ -63,7 +69,18 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+            // ช่องกรอกจำนวน
+            TextField(
+              controller: _capacityController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(
+                labelText: 'จำนวนนักเรียนที่รับ (คน)',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               height: 50,
