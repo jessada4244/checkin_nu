@@ -4,7 +4,7 @@ class ApiConstants {
   // iOS Simulator / Web ใช้ 'http://localhost/server_api'
   // เครื่องจริง ใช้ IP ของเครื่อง Mac เช่น 'http://192.168.1.45/server_api'
 
-  static const String baseUrl = 'http://10.0.2.2/server_api';
+  static const String baseUrl = 'http://www.qrcheckinnu.online/server_api';
 
   // Auth
   static const String login = '$baseUrl/auth/login.php';

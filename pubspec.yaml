@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_map: ^7.0.0  # สำหรับแผนที่ OpenStreetMap
+  latlong2: ^0.9.1     # สำหรับจัดการพิกัด (Latitude/Longitude)
 # Network
   http: ^1.2.0            # ยิง API หา Server
   
